@@ -1,0 +1,52 @@
+{
+  "name": "effect-dspy",
+  "version": "0.0.1",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit && npm run examples:typecheck",
+    "examples:typecheck": "tsc -p tsconfig.examples.json --noEmit",
+    "examples:build": "tsc -p tsconfig.examples.json",
+    "example:predict": "npm run examples:build && node dist-examples/examples/predict.js",
+    "example:bootstrap": "npm run examples:build && node dist-examples/examples/bootstrap.js",
+    "test": "vitest run",
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "build": "npm run clean && tsc -p tsconfig.build.json",
+    "format": "dprint fmt",
+    "format:check": "dprint check",
+    "lint": "oxlint --type-aware --deny-warnings .",
+    "lint:fix": "oxlint --type-aware --fix .",
+    "check": "npm run format:check && npm run typecheck && npm run lint && npm test",
+    "prepack": "npm run build",
+    "prepare": "effect-tsgo patch --typescript --oxlint"
+  },
+  "dependencies": {
+    "effect": "4.0.0-rc.112"
+  },
+  "devDependencies": {
+    "@effect/tsgo": "0.46.1",
+    "@effect/vitest": "4.0.0-rc.112",
+    "@oxlint/plugins": "1.85.0",
+    "@types/node": "26.6.3",
+    "dprint": "0.57.4",
+    "oxlint": "1.85.0",
+    "oxlint-tsgolint": "7.0.2003",
+    "typescript": "7.0.2",
+    "vitest": "4.1.11"
+  },
+  "engines": {
+    "node": "^22.12.0 || >=24.0.0"
+  }
+}
