@@ -98,6 +98,12 @@ their real boundaries, not silenced with broad overrides or type laundering.
 after updates. Apply any authorized
 spacing autofixes before dprint, then verify a second fix/format pass is stable.
 
+On Linux hosts with limited memory and swap, Oxlint's JS plugins may abort in
+`oxc_allocator` before reporting diagnostics. This orb has 3.8 GiB RAM, no swap,
+and `vm.overcommit_memory=0`; lint aborts here, while the CI Node 22 run passes.
+Use a host that permits the plugin's large virtual-memory reservation to run the
+full gate. Do not disable the plugins or treat the abort as a lint pass.
+
 ## Editors: one TypeScript server
 
 VS Code workspace settings follow the official `effect-tsgo setup --vscode`
